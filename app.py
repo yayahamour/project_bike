@@ -1,6 +1,9 @@
 import streamlit as st
 import pickle
-
+import sklearn 
+from pycaret.regression import *
+import pandas as pd 
+import numpy as np 
 
 # App configs
 st.set_page_config(
@@ -42,15 +45,21 @@ humidity = st.text_input("Enter humidity (in %):")
 windspeed = st.text_input("Enter windspeed (in km/h):")
 
 if st.button("Predict Rentals"):
+
     if ((date=='') | (time=='') | (day=='') | (weather=='') | 
         (temp=='') | (humidity=='') | (windspeed=='')):
         st.error("Please fill all fields before proceeding.")
     else :
         # You will have to create the model
-        savedmodel = open('tu_n_as_pas_encore_creer_le_modele_alors_forcement_ca_peut_pas_marcher.pkl', 'rb')
+        df = pd.DataFrame()
+        df['date'] = date
+        df['date'] = pd.to_datetime(df['date']).dt.dayofyear
+        #                    season	holiday	workingday	weather	temp	atemp	humidity	windspeed	day	   hour
+        savedmodel = open('lgbm.pkl', 'rb')
         model = pickle.load(savedmodel)
         savedmodel.close()
-    
-        prediction = int(model.predict(date, time, day, weather, temp, humidity, windspeed))   
+        array = np.array([[1, 0, 0, 1, int(temp), 18, 20, 0.2,  12, 2]])
+
+        prediction = int(model.predict(array))   
         st.success("There will be an approx. demand of " + str(prediction) + " bikes for above conditions.")
 
