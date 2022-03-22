@@ -1,7 +1,6 @@
 import streamlit as st
 import pickle
 import sklearn 
-from pycaret.regression import *
 import pandas as pd 
 import numpy as np 
 
@@ -31,6 +30,13 @@ st.markdown("<i>For more details on this competition, [visit here](https://www.k
 
 st.markdown("<br><h4><b> Please fill in the below details:</b></h4><br>", unsafe_allow_html=True)
 
+from pipeline import run_df
+from lightgbm import LGBMRegressor 
+
+# Creation of datafram 
+df_app = run_df()
+array = df_app.iloc[-1:,:]
+
 # User input features
 date = st.date_input("Enter date :")
 time = st.time_input("Enter Time (HH24:MM):")
@@ -58,7 +64,7 @@ if st.button("Predict Rentals"):
         savedmodel = open('lgbm.pkl', 'rb')
         model = pickle.load(savedmodel)
         savedmodel.close()
-        array = np.array([[1, 0, 0, 1, int(temp), 18, 20, 0.2,  12, 2]])
+        # array = np.array([[1, 0, 0, 1, int(temp), 18, 20, 0.2,  12, 2]])
 
         prediction = int(model.predict(array))   
         st.success("There will be an approx. demand of " + str(prediction) + " bikes for above conditions.")
