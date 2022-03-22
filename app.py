@@ -1,5 +1,6 @@
 import streamlit as st
 import pickle
+import pycaret
 
 
 # App configs
@@ -47,7 +48,7 @@ if st.button("Predict Rentals"):
         st.error("Please fill all fields before proceeding.")
     else :
         # You will have to create the model
-        savedmodel = open('tu_n_as_pas_encore_creer_le_modele_alors_forcement_ca_peut_pas_marcher.pkl', 'rb')
+        savedmodel = open('lightgbm-location-velo.pkl', 'rb')
         model = pickle.load(savedmodel)
         savedmodel.close()
     
