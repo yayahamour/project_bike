@@ -29,17 +29,17 @@ st.markdown("<i>For more details on this competition, [visit here](https://www.k
 st.markdown("<br><h4><b> Please fill in the below details:</b></h4><br>", unsafe_allow_html=True)
 
 # User input features
-date = st.date_input("Enter date :")
-time = st.time_input("Enter Time (HH24:MM):")
-day = st.selectbox("What type of day is it?", ['Holiday', 'Working day', 'Weekend'])
-weather = st.selectbox("What type of weather is it?", 
+date = st.sidebar.date_input("Enter date :")
+time = st.sidebar.time_input("Enter Time (HH24:MM):")
+day = st.sidebar.selectbox("What type of day is it?", ['Holiday', 'Working day', 'Weekend'])
+weather = st.sidebar.selectbox("What type of weather is it?", 
              ['Clear/Few clouds', 
               'Mist/Cloudy', 
               'Light Rain/Light Snow/Scattered clouds',
               'Heavy Rain/Snowfall/Foggy/Thunderstorm'])
-temp = st.text_input("Enter temperature (in °C):")
-humidity = st.text_input("Enter humidity (in %):")
-windspeed = st.text_input("Enter windspeed (in km/h):")
+temp = st.sidebar.text_input("Enter temperature (in °C):")
+humidity = st.sidebar.text_input("Enter humidity (in %):")
+windspeed = st.sidebar.text_input("Enter windspeed (in km/h):")
 
 if st.button("Predict Rentals"):
     if ((date=='') | (time=='') | (day=='') | (weather=='') | 
