@@ -78,6 +78,11 @@ def run_df_dc():
     df_app['weather'] = df_app['weather'].astype(int)
     df_app['season'] = df_app['weather'].astype(int)
     
+    
+    df_app['temp'] = df_app['temp'] - 273.15
+    df_app['atemp'] = df_app['atemp'] - 273.15
+
+    
     df_app.drop('weather2', axis=1, inplace=True)
     df_app.drop('count', axis=1, inplace=True)
     
@@ -158,5 +163,9 @@ def run_df_lille():
     
     df_app.drop('weather2', axis=1, inplace=True)
     df_app.drop('count', axis=1, inplace=True)
+    
+    
+    df_app['temp'] = df_app['temp'] - 273.15
+    df_app['atemp'] = df_app['atemp'] - 273.15
     
     return df_app

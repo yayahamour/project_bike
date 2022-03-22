@@ -33,8 +33,6 @@ if genre == 'Washington DC':
 else:
     df_app = run_df_lille()
     array = df_app.iloc[-1:,:]
-    prediction = int(model.predict(array))   
-    st.success("There will be an approx. demand of " + str(prediction) + " bikes for above conditions.")
 
 
 genre = st.sidebar.radio(
