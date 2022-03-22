@@ -1,5 +1,7 @@
+from matplotlib import image
 import streamlit as st
 import pickle
+from PIL import Image
 
 
 # App configs
@@ -9,37 +11,37 @@ layout="centered",
 initial_sidebar_state="expanded",
 )
 
+genre = st.sidebar.radio(
+     "Quelle type de prédiction souhaitez-vous ?",
+     ('Automatique', 'Manuel'))
+
+if genre == 'Automatique':
+    st.write(" ")
+else:
+     # User input features
+    date = st.sidebar.date_input("Entrer la date :")
+    time = st.sidebar.time_input("Entrer l'heure (HH24:MM):")
+    day = st.sidebar.selectbox("Est on un jour férié ou un jour de vacance ?", ['Jour de vacance', 'Journée de travail', 'Weekend'])
+    weather = st.sidebar.selectbox("Quelle est la météo ?", 
+                 ['Clear/Few clouds', 
+                  'Mist/Cloudy', 
+                  'Light Rain/Light Snow/Scattered clouds',
+                    'Heavy Rain/Snowfall/Foggy/Thunderstorm'])
+    temp = st.sidebar.text_input("Quelle est la température (en °C) ?")
+    humidity = st.sidebar.text_input("Quel est le pourcentage d'humidité ?")
+    windspeed = st.sidebar.text_input("Quel est la vitesse du vent ? (in km/h):")
+
+
 # Heading
-st.markdown("<h1 style='text-align: center; background-color:deepskyblue'>🚴 Bike Rental Demand Prediction 🚴</h1>", 
-            unsafe_allow_html=True)
-# Sub heading
-st.markdown("<h4 style='text-align: center'><i>∞∞∞ A Machine Learning based web app to predict bike rental demand ∞∞∞</i></h4>",
-            unsafe_allow_html=True)
-# Image
-st.markdown("<h1 align='center'><img src='https://storage.googleapis.com/kaggle-competitions/kaggle/3948/media/bikes.png'></img></h1>", 
-            unsafe_allow_html=True)
-
-
+image = Image.open('logo_vlille.png')
+st.image(image)
 
 # About 
-st.write("Bike sharing systems are a means of renting bicycles where the process of obtaining membership, rental, and bike return is automated via a network of kiosk locations throughout a city. Using these systems, people are able rent a bike from a one location and return it to a different place on an as-needed basis.")
-st.write("This project is based on a Kaggle competition. Our task is to combine historical usage patterns with weather data in order to forecast bike rental demand in the Capital Bikeshare program in Washington, D.C.")
-st.markdown("<i>For more details on this competition, [visit here](https://www.kaggle.com/c/bike-sharing-demand).</i>", unsafe_allow_html=True)
+st.write("Inauguré le 16 septembre 2011, V'Lille est le système de vélos en libre-service la métropole lilloise.")
+st.write("Dès son lancement, le service compte 2 000 abonnés dont 1 700 pour le libre-service. L'objectif affiché était d'arriver à 20 000 abonnés, libre-service et location longue durée confondus, d'ici 2015.")
+st.write("Après deux mois de fonctionnement, V'Lille compte 80 000 abonnés aux vélos en libre-service et 600 000 locations enregistrées.")
+st.write("Au 1er janvier 2020, il compte 2200 vélos répartis sur 223 stations, ce qui en fait un des éléments phares du système vélo de la métropole lilloise, qui compte environ 1000 km² de pistes et voies cyclables.")
 
-st.markdown("<br><h4><b> Please fill in the below details:</b></h4><br>", unsafe_allow_html=True)
-
-# User input features
-date = st.sidebar.date_input("Enter date :")
-time = st.sidebar.time_input("Enter Time (HH24:MM):")
-day = st.sidebar.selectbox("What type of day is it?", ['Holiday', 'Working day', 'Weekend'])
-weather = st.sidebar.selectbox("What type of weather is it?", 
-             ['Clear/Few clouds', 
-              'Mist/Cloudy', 
-              'Light Rain/Light Snow/Scattered clouds',
-              'Heavy Rain/Snowfall/Foggy/Thunderstorm'])
-temp = st.sidebar.text_input("Enter temperature (in °C):")
-humidity = st.sidebar.text_input("Enter humidity (in %):")
-windspeed = st.sidebar.text_input("Enter windspeed (in km/h):")
 
 if st.button("Predict Rentals"):
     if ((date=='') | (time=='') | (day=='') | (weather=='') | 
