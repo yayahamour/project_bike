@@ -2,7 +2,6 @@ import streamlit as st
 import pickle
 import pycaret
 
-
 # App configs
 st.set_page_config(
 page_title="Bike Sharing Demand Prediction",
