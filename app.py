@@ -12,6 +12,16 @@ initial_sidebar_state="expanded",
 )
 
 genre = st.sidebar.radio(
+     "Quelle ville souhaitez-vous ?",
+     ('Lille', 'Washington DC'))
+
+if genre == 'Washington DC':
+    st.write(" ")
+else:
+    st.write(" ")
+
+
+genre = st.sidebar.radio(
      "Quelle type de prédiction souhaitez-vous ?",
      ('Automatique', 'Manuel'))
 
@@ -23,10 +33,10 @@ else:
     time = st.sidebar.time_input("Entrer l'heure (HH24:MM):")
     day = st.sidebar.selectbox("Est on un jour férié ou un jour de vacance ?", ['Jour de vacance', 'Journée de travail', 'Weekend'])
     weather = st.sidebar.selectbox("Quelle est la météo ?", 
-                 ['Clear/Few clouds', 
-                  'Mist/Cloudy', 
-                  'Light Rain/Light Snow/Scattered clouds',
-                    'Heavy Rain/Snowfall/Foggy/Thunderstorm'])
+                 ['Ciel dégagé/légérement nuageux', 
+                  'Brume/Nuageux', 
+                  'Légère pluie/Légére chute de neige/Nuages eparpillé',
+                    'Forte Pluie/Chute de neige/Brouilard/Orage'])
     temp = st.sidebar.text_input("Quelle est la température (en °C) ?")
     humidity = st.sidebar.text_input("Quel est le pourcentage d'humidité ?")
     windspeed = st.sidebar.text_input("Quel est la vitesse du vent ? (in km/h):")
@@ -43,7 +53,7 @@ st.write("Après deux mois de fonctionnement, V'Lille compte 80 000 abonnés aux
 st.write("Au 1er janvier 2020, il compte 2200 vélos répartis sur 223 stations, ce qui en fait un des éléments phares du système vélo de la métropole lilloise, qui compte environ 1000 km² de pistes et voies cyclables.")
 
 
-if st.button("Predict Rentals"):
+if st.button("Prédiction"):
     if ((date=='') | (time=='') | (day=='') | (weather=='') | 
         (temp=='') | (humidity=='') | (windspeed=='')):
         st.error("Please fill all fields before proceeding.")
