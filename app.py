@@ -5,6 +5,17 @@ import sklearn
 import pandas as pd 
 import numpy as np 
 from PIL import Image
+from pipeline import run_df 
+
+
+# Creation of datafram 
+df_app = run_df()
+array = df_app.iloc[-1:,:]
+
+# On instancie le model 
+savedmodel = open('lgbm.pkl', 'rb')
+model = pickle.load(savedmodel)
+savedmodel.close()
 
 # App configs
 st.set_page_config(
@@ -21,6 +32,8 @@ if genre == 'Washington DC':
     st.write(" ")
 else:
     st.write(" ")
+    prediction = int(model.predict(array))   
+    st.success("There will be an approx. demand of " + str(prediction) + " bikes for above conditions.")
 
 
 genre = st.sidebar.radio(
@@ -44,6 +57,7 @@ else:
     windspeed = st.sidebar.text_input("Quel est la vitesse du vent ? (in km/h):")
 
 
+
 # Heading
 image = Image.open('logo_vlille.png')
 st.image(image)
@@ -65,10 +79,6 @@ if st.button("Prédiction"):
         df['date'] = date
         df['date'] = pd.to_datetime(df['date']).dt.dayofyear
         #                    season	holiday	workingday	weather	temp	atemp	humidity	windspeed	day	   hour
-        savedmodel = open('lgbm.pkl', 'rb')
-        model = pickle.load(savedmodel)
-        savedmodel.close()
-        # array = np.array([[1, 0, 0, 1, int(temp), 18, 20, 0.2,  12, 2]])
 
         prediction = int(model.predict(array))   
         st.success("There will be an approx. demand of " + str(prediction) + " bikes for above conditions.")
