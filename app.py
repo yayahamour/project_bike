@@ -5,12 +5,10 @@ import sklearn
 import pandas as pd 
 import numpy as np 
 from PIL import Image
-from pipeline import run_df 
+from pipeline import run_df_dc , run_df_lille
 
 
-# Creation of datafram 
-df_app = run_df()
-array = df_app.iloc[-1:,:]
+df_app = ''
 
 # On instancie le model 
 savedmodel = open('lgbm.pkl', 'rb')
@@ -29,9 +27,12 @@ genre = st.sidebar.radio(
      ('Lille', 'Washington DC'))
 
 if genre == 'Washington DC':
-    st.write(" ")
+    # Creation of datafram 
+    df_app = run_df_dc()
+    array = df_app.iloc[-1:,:]
 else:
-    st.write(" ")
+    df_app = run_df_lille()
+    array = df_app.iloc[-1:,:]
     prediction = int(model.predict(array))   
     st.success("There will be an approx. demand of " + str(prediction) + " bikes for above conditions.")
 
@@ -70,16 +71,9 @@ st.write("Au 1er janvier 2020, il compte 2200 vélos répartis sur 223 stations,
 
 
 if st.button("Prédiction"):
-    if ((date=='') | (time=='') | (day=='') | (weather=='') | 
-        (temp=='') | (humidity=='') | (windspeed=='')):
-        st.error("Please fill all fields before proceeding.")
-    else :
-        # You will have to create the model
-        df = pd.DataFrame()
-        df['date'] = date
-        df['date'] = pd.to_datetime(df['date']).dt.dayofyear
-        #                    season	holiday	workingday	weather	temp	atemp	humidity	windspeed	day	   hour
+    # You will have to create the model
+    #                    season	holiday	workingday	weather	temp	atemp	humidity	windspeed	day	   hour
 
-        prediction = int(model.predict(array))   
-        st.success("There will be an approx. demand of " + str(prediction) + " bikes for above conditions.")
+    prediction = int(model.predict(array))   
+    st.success("There will be an approx. demand of " + str(prediction) + " bikes for above conditions.")
 
