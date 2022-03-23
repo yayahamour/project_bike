@@ -61,9 +61,9 @@ if ville == 'Washington DC' :
                     'Brume/Nuageux', 
                     'Légère pluie/Légére chute de neige/Nuages eparpillé',
                         'Forte Pluie/Chute de neige/Brouilard/Orage'])
-        temp = st.sidebar.text_input("Quelle est la température (en °C) ?")
-        humidity = st.sidebar.text_input("Quel est le pourcentage d'humidité ?")
-        windspeed = st.sidebar.text_input("Quel est la vitesse du vent ? (in km/h):")
+        temp = st.sidebar.text_input("Quelle est la température (en °C) ?", value=0)
+        humidity = st.sidebar.text_input("Quel est le pourcentage d'humidité ?", value=0)
+        windspeed = st.sidebar.text_input("Quel est la vitesse du vent ? (in km/h):", value=0)
         
         df_app = run_df_dc_personalised(date=date, time=time, day=day, weather=weather, temp=temp, temp_feel=temp, humidity=humidity, windspeed=windspeed)
         array_1 = df_app.iloc[-1:,:]
@@ -99,9 +99,9 @@ elif ville =='Lille':
                         'Brume/Nuageux', 
                         'Légère pluie/Légére chute de neige/Nuages eparpillé',
                         'Forte Pluie/Chute de neige/Brouilard/Orage'])
-            temp = st.sidebar.text_input("Quelle est la température (en °C) ?", value=5)
-            humidity = st.sidebar.text_input("Quel est le pourcentage d'humidité ?", value=5)
-            windspeed = st.sidebar.text_input("Quel est la vitesse du vent ? (in km/h):",value=5)
+            temp = st.sidebar.text_input("Quelle est la température (en °C) ?", value=0)
+            humidity = st.sidebar.text_input("Quel est le pourcentage d'humidité ?", value=0)
+            windspeed = st.sidebar.text_input("Quel est la vitesse du vent ? (in km/h):", value=0)
             
             df_app = run_df_dc_personalised(date=date, time=time, day=day, weather=weather, temp=temp, temp_feel=temp, humidity=humidity, windspeed=windspeed)
             array_1 = df_app.iloc[-1:,:]
