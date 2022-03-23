@@ -1,7 +1,7 @@
 from matplotlib import image
 import streamlit as st
 import pickle
-import sklearn 
+import sklearn
 import pandas as pd 
 import numpy as np 
 from PIL import Image
@@ -11,7 +11,7 @@ from pipeline import run_df_dc , run_df_lille
 df_app = ''
 
 # On instancie le model 
-savedmodel = open('lgbm.pkl', 'rb')
+savedmodel = open('./lgbm.pkl', 'rb')
 model = pickle.load(savedmodel)
 savedmodel.close()
 
@@ -30,9 +30,31 @@ if genre == 'Washington DC':
     # Creation of datafram 
     df_app = run_df_dc()
     array_1 = df_app.iloc[-1:,:]
+
+    # Heading
+    image = Image.open('CapitalBikeshare_Logo.jpg')
+    st.image(image)
+
+    # About 
+    st.write("Capital Bikeshare is a bicycle-sharing system which serves Washington, D.C.; Arlington County, Virginia; the cities of Alexandria, Virginia and Falls Church, Virginia; Montgomery County, Maryland and Fairfax County, Virginia. As of May 2021, it had 627 stations and 5 400 bicycles.")
+    st.write("Nearly 9 322 daily users who use our services in our 658 stations.")
+    st.write("Learn more on our website : www.capitalbikeshare.com")
+
 else:
     df_app = run_df_lille()
     array_1 = df_app.iloc[-1:,:]
+
+    # Heading
+    image = Image.open('logo_vlille.png')
+    st.image(image)
+
+    # About 
+    st.write("Inauguré le 16 septembre 2011, V'Lille est le système de vélos en libre-service la métropole lilloise.")
+    st.write("Dès son lancement, le service compte 2 000 abonnés dont 1 700 pour le libre-service. L'objectif affiché était d'arriver à 20 000 abonnés, libre-service et location longue durée confondus, d'ici 2015.")
+    st.write("Après deux mois de fonctionnement, V'Lille compte 80 000 abonnés aux vélos en libre-service et 600 000 locations enregistrées.")
+    st.write("Au 1er janvier 2020, il compte 2200 vélos répartis sur 223 stations, ce qui en fait un des éléments phares du système vélo de la métropole lilloise, qui compte environ 1000 km² de pistes et voies cyclables.")
+    st.write("Rejoignez-nous sur : https://www.ilevia.fr/cms/institutionnel/velo/vlille/ ")
+
 
 
 genre = st.sidebar.radio(
@@ -55,17 +77,6 @@ else:
     humidity = st.sidebar.text_input("Quel est le pourcentage d'humidité ?")
     windspeed = st.sidebar.text_input("Quel est la vitesse du vent ? (in km/h):")
 
-
-
-# Heading
-image = Image.open('logo_vlille.png')
-st.image(image)
-
-# About 
-st.write("Inauguré le 16 septembre 2011, V'Lille est le système de vélos en libre-service la métropole lilloise.")
-st.write("Dès son lancement, le service compte 2 000 abonnés dont 1 700 pour le libre-service. L'objectif affiché était d'arriver à 20 000 abonnés, libre-service et location longue durée confondus, d'ici 2015.")
-st.write("Après deux mois de fonctionnement, V'Lille compte 80 000 abonnés aux vélos en libre-service et 600 000 locations enregistrées.")
-st.write("Au 1er janvier 2020, il compte 2200 vélos répartis sur 223 stations, ce qui en fait un des éléments phares du système vélo de la métropole lilloise, qui compte environ 1000 km² de pistes et voies cyclables.")
 
 
 if st.button("Prédiction"):
