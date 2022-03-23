@@ -29,10 +29,10 @@ genre = st.sidebar.radio(
 if genre == 'Washington DC':
     # Creation of datafram 
     df_app = run_df_dc()
-    array = df_app.iloc[-1:,:]
+    array_1 = df_app.iloc[-1:,:]
 else:
     df_app = run_df_lille()
-    array = df_app.iloc[-1:,:]
+    array_1 = df_app.iloc[-1:,:]
 
 
 genre = st.sidebar.radio(
@@ -72,6 +72,8 @@ if st.button("Prédiction"):
     # You will have to create the model
     #                    season	holiday	workingday	weather	temp	atemp	humidity	windspeed	day	   hour
 
-    prediction = int(model.predict(array))   
-    st.success("There will be an approx. demand of " + str(prediction) + " bikes for above conditions.")
+    prediction = int(model.predict(array_1))   
+    st.success("A approximativement " + str(int(array_1['hour'].values)) + "h , et en ce jour de week-end, et étant donnée l'ensoleillement, l'humidité et la vitesse du vent, il faudra  approximativement " + str(prediction) + " vélos loués sur cette station.")
 
+markdown =  '------------------------------------ \n                                                Made by students of Simplon - Microsoft Dev IA formation'
+st.markdown(markdown)

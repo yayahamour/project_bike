@@ -4,7 +4,8 @@ import datetime as dt
 
 
 
-
+# faire graph count vélo par jour des 20 jours précédents la requêtes + 10 des jours suivants 
+# Phrase impliquant tout les facteurs de la prédictions. 
 
 def run_df_dc():
     df = pd.read_csv('./data/train.csv')
