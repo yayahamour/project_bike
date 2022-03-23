@@ -4,7 +4,10 @@ import datetime as dt
 
 
 
+# https://opendata.lillemetropole.fr/explore/dataset/vlille-realtime/table/
+
 # faire graph count vélo par jour des 20 jours précédents la requêtes + 10 des jours suivants 
+
 # Phrase impliquant tout les facteurs de la prédictions. 
 
 def run_df_dc():
