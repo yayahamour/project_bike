@@ -13,14 +13,15 @@ import datetime as dt
 def run_df_dc():
     df = pd.read_csv('./data/train.csv')
     df.drop('Unnamed: 0', axis=1, inplace = True)
-    df['day'] = pd.to_datetime(df['datetime']).dt.dayofyear
-    df['hour'] = pd.to_datetime(df['datetime']).dt.hour
     df.drop('datetime', axis=1, inplace=True)
-    df2 = df.drop(columns=['registered', 'casual'], index=1)
-    df_app = pd.DataFrame(columns=df2.keys(), index=np.arange(1,5,1))
+    df.drop(columns=['registered', 'casual'], index=1, inplace=True)
+    df_app = pd.DataFrame(columns=df.keys(), index=np.arange(1,5,1))
     
     # Day of year 
     df_app['day'] = pd.to_datetime('today').normalize().dayofyear
+    df_app['hour'] = pd.datetime.today()
+    df_app['hour'] = df_app['hour'].dt.tz_localize('Etc/GMT-5').dt.tz_convert('Universal').dt.hour
+
 
     # Season 
     df_app['season'][df_app['day'] < 172 ] = 1
@@ -28,7 +29,6 @@ def run_df_dc():
     df_app['season'][(df_app['day'] >= 264) & (df_app['day'] < 356 ) ] = 3
     df_app['season'][(df_app['day'] >= 356) | (df_app['day'] < 172 ) ] = 4
 
-    df_app['hour'] = pd.to_datetime('today').hour
 
     # Holliday 
     df_app['holiday'] = 0 
@@ -96,14 +96,15 @@ def run_df_dc():
 def run_df_lille():
     df = pd.read_csv('./data/train.csv')
     df.drop('Unnamed: 0', axis=1, inplace = True)
-    df['day'] = pd.to_datetime(df['datetime']).dt.dayofyear
-    df['hour'] = pd.to_datetime(df['datetime']).dt.hour
     df.drop('datetime', axis=1, inplace=True)
-    df2 = df.drop(columns=['registered', 'casual'], index=1)
-    df_app = pd.DataFrame(columns=df2.keys(), index=np.arange(1,5,1))
-    
+    df.drop(columns=['registered', 'casual'], index=1, inplace=True)
+    df_app = pd.DataFrame(columns=df.keys(), index=np.arange(1,5,1))
+
     # Day of year 
     df_app['day'] = pd.to_datetime('today').normalize().dayofyear
+    df_app['hour'] = pd.datetime.today()
+    df_app['hour'] = df_app['hour'].dt.tz_localize('Etc/GMT-1').dt.tz_convert('Europe/Paris').dt.hour
+
 
     # Season 
     df_app['season'][df_app['day'] < 172 ] = 1
@@ -111,7 +112,6 @@ def run_df_lille():
     df_app['season'][(df_app['day'] >= 264) & (df_app['day'] < 356 ) ] = 3
     df_app['season'][(df_app['day'] >= 356) | (df_app['day'] < 172 ) ] = 4
 
-    df_app['hour'] = pd.to_datetime('today').hour
 
     # Holliday 
     df_app['holiday'] = 0 
@@ -136,7 +136,7 @@ def run_df_lille():
     from urllib.request import urlopen
     import json
 
-    with closing(urlopen('https://api.openweathermap.org/data/2.5/weather?lat=50.62925&lon=3.057256&appid=105c1c6fdcbbdebbb96de7d29b2fc7ff')) as f:
+    with closing(urlopen('https://api.openweathermap.org/data/2.5/weather?lat=38.9071923&lon=-77.0368707&appid=105c1c6fdcbbdebbb96de7d29b2fc7ff')) as f:
         cityEph = json.loads(f.read())
         # print(cityEph)
         # print(cityEph['wind']['speed'])
@@ -165,11 +165,12 @@ def run_df_lille():
     df_app['weather'] = df_app['weather'].astype(int)
     df_app['season'] = df_app['weather'].astype(int)
     
-    df_app.drop('weather2', axis=1, inplace=True)
-    df_app.drop('count', axis=1, inplace=True)
-    
     
     df_app['temp'] = df_app['temp'] - 273.15
     df_app['atemp'] = df_app['atemp'] - 273.15
+
+    
+    df_app.drop('weather2', axis=1, inplace=True)
+    df_app.drop('count', axis=1, inplace=True)
     
     return df_app
