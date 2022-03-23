@@ -110,7 +110,7 @@ elif ville =='Lille':
 if st.button("Prédiction") :
     
     prediction = int(model.predict(array_1))   
-    st.write("*A approximativement " + str(int(array_1['hour'].values)) + "h , et en ce jour de week-end, et étant donnée l'ensoleillement, l'humidité et la vitesse du vent, il faudra  approximativement " + str(prediction) + " vélos loués sur cette station*. :sunglasses: ")
+    st.write("*A approximativement " + str(int(array_1['hour'].values)) + "h , heure locale, et en ce jour de week-end, et étant donnée l'ensoleillement, l'humidité et la vitesse du vent, il faudra  approximativement " + str(prediction) + " vélos loués sur cette station*. :sunglasses: ")
 
 markdown =  '------------------------------------ \n Made by students of Simplon - Microsoft Dev IA formation'
 st.markdown(markdown)
