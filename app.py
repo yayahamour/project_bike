@@ -84,7 +84,7 @@ if st.button("Prédiction"):
     #                    season	holiday	workingday	weather	temp	atemp	humidity	windspeed	day	   hour
 
     prediction = int(model.predict(array_1))   
-    st.success("A approximativement " + str(int(array_1['hour'].values)) + "h , et en ce jour de week-end, et étant donnée l'ensoleillement, l'humidité et la vitesse du vent, il faudra  approximativement " + str(prediction) + " vélos loués sur cette station.")
+    st.success("L'estimation de location sur la plage horraire de "+ str(int(array_1['hour'].values)) + "h  est de " + str(prediction) + " vélos sur cette station.")
 
 markdown =  '------------------------------------ \n                                                Made by students of Simplon - Microsoft Dev IA formation'
 st.markdown(markdown)
