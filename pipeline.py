@@ -7,12 +7,10 @@ import datetime as dt
 # https://opendata.lillemetropole.fr/explore/dataset/vlille-realtime/table/
 
 # Enelever jour de vacance car on le calcule automatiquement avec la date ? 
-# Refaire Holiday et les jours ferié pour la piepline de france 
 
 # faire graph count vélo par jour des 20 jours précédents la requêtes + 10 des jours suivants 
 
-# Phrase impliquant tout les facteurs de la prédictions. 
-
+# Faire de la factorisation de certaines parties par des fonctions comme pour holliday etc
 
 
 
@@ -74,7 +72,7 @@ def run_df_dc():
         
     df_app['workingday'] = 0
     for i in np.arange(1,365,7):
-        df_app['workingday'][(df_app['day'] == i) | (df_app['day'] == i) + 1 ] = 1
+        df_app['workingday'][(df_app['day'] == i) | (df_app['day'] == i + 1) ] = 1
         
         
         
@@ -161,7 +159,7 @@ def run_df_lille():
         
     df_app['workingday'] = 0
     for i in np.arange(1,365,7):
-        df_app['workingday'][(df_app['day'] == i) | (df_app['day'] == i) + 1 ] = 1
+        df_app['workingday'][(df_app['day'] == i) | (df_app['day'] == i + 1) ] = 1
         
         
         
@@ -242,7 +240,7 @@ def run_df_dc_personalised(date, time, day, weather, temp, temp_feel, humidity, 
     # A refa
     df_app['workingday'] = 0
     for i in np.arange(1,365,7):
-        df_app['workingday'][(df_app['day'] == i) | (df_app['day'] == i) + 1 ] = 1
+        df_app['workingday'][(df_app['day'] == i) | (df_app['day'] == i + 1) ] = 1
         
         
         
