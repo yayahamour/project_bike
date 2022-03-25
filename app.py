@@ -36,7 +36,7 @@ if ville == 'Washington DC' :
     
     # Heading
     image = Image.open('CapitalBikeshare_Logo.jpg')
-    st.image(image, width=150)
+    st.image(image)
 
     # About 
     st.write("Capital Bikeshare is a bicycle-sharing system which serves Washington, D.C.; Arlington County, Virginia; the cities of Alexandria, Virginia and Falls Church, Virginia; Montgomery County, Maryland and Fairfax County, Virginia. As of May 2021, it had 627 stations and 5 400 bicycles.")
@@ -53,20 +53,25 @@ if ville == 'Washington DC' :
         
     elif genre == 'Manuel':
         
-        date = st.sidebar.date_input("Entrer la date :")
-        time = st.sidebar.time_input("Entrer l'heure (HH24:MM):")
-        day = st.sidebar.selectbox("Est on un jour férié ou un jour de vacance ?", ['Jour de vacance', 'Journée de travail', 'Weekend'])
-        weather = st.sidebar.selectbox("Quelle est la météo ?", 
-                    ['Ciel dégagé/légérement nuageux', 
-                    'Brume/Nuageux', 
-                    'Légère pluie/Légére chute de neige/Nuages eparpillé',
-                        'Forte Pluie/Chute de neige/Brouilard/Orage'])
-        temp = st.sidebar.text_input("Quelle est la température (en °C) ?", value=0)
-        humidity = st.sidebar.text_input("Quel est le pourcentage d'humidité ?", value=0)
-        windspeed = st.sidebar.text_input("Quel est la vitesse du vent ? (in km/h):", value=0)
+        date = st.sidebar.date_input("Enter the date :")
+        time = st.sidebar.time_input("Enter hour (HH24:MM):")
+        day = st.sidebar.selectbox("Prediction for a holliday, workday ou weekend ?", ['Holliday', 'Workday', 'Weekend'])
+        weather = st.sidebar.selectbox("WHat is the weather ?", 
+                    ['Clear/Few clouds', 
+                    'Mist/Cloudy', 
+                    'Light Rain/Light Snow/Scattered clouds',
+                        'Heavy Rain/Snowfall/Foggy/Thunderstorm'])
+        temp = st.sidebar.text_input("Enter temperature (in °C) ?", value=0)
+        humidity = st.sidebar.text_input("Enter humidity (in %) ?", value=0)
+        windspeed = st.sidebar.text_input("Enter windspeed ? (in km/h):", value=0)
         
         df_app = run_df_dc_personalised(date=date, time=time, weather=weather, temp=temp, temp_feel=temp, humidity=humidity, windspeed=windspeed)
         array_1 = df_app.iloc[-1:,:]
+    
+    if st.button("Prédiction") :
+    
+        prediction = int(model.predict(array_1))   
+        st.success("The estimate for the time range "+ str(int(array_1['hour'].values)) + "h  is " + str(prediction) + " bikes for this station.")
 
 
     
@@ -74,7 +79,7 @@ elif ville =='Lille':
     
         # Heading
         image = Image.open('logo_vlille.png')
-        st.image(image, width=150)
+        st.image(image)
         
         # About 
         st.write("Inauguré le 16 septembre 2011, V'Lille est le système de vélos en libre-service la métropole lilloise.")
@@ -107,10 +112,11 @@ elif ville =='Lille':
             array_1 = df_app.iloc[-1:,:]
 
 
-if st.button("Prédiction") :
+        if st.button("Prédiction") :
     
-    prediction = int(model.predict(array_1))   
-    st.write("*A approximativement " + str(int(array_1['hour'].values)) + "h , heure locale, et en ce jour de week-end, et étant donnée l'ensoleillement, l'humidité et la vitesse du vent, il faudra  approximativement " + str(prediction) + " vélos loués sur cette station*. :sunglasses: ")
-
+            prediction = int(model.predict(array_1))   
+            st.success("L'estimation de location sur la plage horraire de "+ str(int(array_1['hour'].values)) + "h  est de " + str(prediction) + " vélos sur cette station.")
+            st.success("L'estimation à été effectué pour le " + str(int(array_1['day'])) + " à " + str(int(array_1['hour'])) + " h pour un/une " + str(int(array_1['holiday'])) + " avec une météo de type " + str(int(array_1['weather'])) + " avec une température de " + str(int(array_1['temp'])) + "° un taux d'humidité de " + str(int(array_1['humidity'])) + " % et un vent de " + str(int(array_1['windspeed'])) + "km/h.")
+            st.write(array_1)
 markdown =  '------------------------------------ \n Made by students of Simplon - Microsoft Dev IA formation'
 st.markdown(markdown)
