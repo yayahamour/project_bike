@@ -9,29 +9,18 @@ import json
 
 
 # J'importe et je modifie le df de train pour en faire le df de prédiction de base avec les colonnes dans le bonnes ordres. 
-def make_df_init(paris=True):
+def make_df_init():
     
     df = pd.read_csv('./data/train.csv')
     df.drop('Unnamed: 0', axis=1, inplace = True)
     df.drop('datetime', axis=1, inplace=True)
     df.drop(columns=['registered', 'casual'], index=1, inplace=True)
     df = pd.DataFrame(columns=df.drop('count', axis=1).keys(), index=np.arange(0,40,1))
-
-    # Day of year 
-    df['day'] = pd.to_datetime('today').normalize().dayofyear
-    df['hour'] = pd.datetime.today()
-    if paris:
-        df['hour'] = df['hour'].dt.tz_localize('Etc/GMT-1').dt.tz_convert('Europe/Paris').dt.hour
-    else:
-        df['hour'] = df['hour'].dt.tz_localize('Etc/GMT-5').dt.tz_convert('Universal').dt.hour
-    
+   
     return df 
 
-def stat_api_3h(df, lat, lon, days=False):
+def stat_api_3h(df, lat, lon):
     date = []
-    num = ""
-    jour_meteo = []
-    heure_meteo = []
     temp = []
     atemp = []
     humidity = []
@@ -39,10 +28,7 @@ def stat_api_3h(df, lat, lon, days=False):
     weather = []
     with closing(urlopen(f'http://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid=6bda77c15824913b0353424425dfeb64')) as f:
         cityEph = json.loads(f.read())
-        
-        
         for i in range(0, len(cityEph['list'])):
-            # print(cityEph['list'][i]['main']['temp'])
             temp.append(cityEph['list'][i]['main']['temp'])
             atemp.append(cityEph['list'][i]['main']['feels_like'])
             humidity.append(cityEph['list'][i]['main']['humidity'])
@@ -51,12 +37,16 @@ def stat_api_3h(df, lat, lon, days=False):
             date.append(cityEph['list'][i]['dt_txt'])
             
     df['day'] = [ i for i in date]
+    df['hour']  = pd.to_datetime(df['day']).dt.hour
     df['day']  = pd.to_datetime(df['day']).dt.dayofyear
     df['temp'] = [ i for i in temp]
     df['atemp'] = [ i for i in atemp]
     df['humidity'] = [ i for i in humidity]
     df['windspeed'] = [ i for i in windspeed]
     df['weather'] = [ str(i) for i in weather]
+
+    df['temp'] = df['temp'] - 273.15
+    df['atemp'] = df['atemp'] - 273.15
     
     
     

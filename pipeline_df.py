@@ -15,9 +15,8 @@ from pipeline_function import *
 def run_df_dc():
         
     df_app = make_df_init(paris=False)
-    stat_api_3h(df_app, lat='38.8951', lon='77.0364', days=False)    
+    stat_api_3h(df_app, lat='38.8951', lon='77.0364')    
     make_season_holiday_dc(df_app)
-        
     return df_app
 
 
@@ -25,31 +24,14 @@ def run_df_dc():
 # Pipeline pour la prediction automatique pour Lille : 
 
 def run_df_lille():
-
+    
+    # Prendre la 1ere lignes du datafram pour le jour d'aujourd'hui
     df_app = make_df_init()
-    stat_api_3h(df_app, lat='50.62925', lon='3.057256', days=False)
+    stat_api_3h(df_app, lat='50.62925', lon='3.057256')
     make_season_holiday_fr(df_app)
     return df_app
 
 
-    
-def run_df_meteo_lille():
-    
-    df_meteo_lille = make_df_init()
-    stat_api_3h(df_meteo_lille, lat='50.62925', lon='3.057256', days=True)
-    make_season_holiday_fr(df_meteo_lille)
-
-    return df_meteo_lille
-
-
-
-def run_df_meteo_dc():
-
-    df_meteo = make_df_init(paris=False)    
-    stat_api_3h(df_meteo, lat='38.8951', lon='77.0364', days=True)
-    make_season_holiday_dc(df_meteo)
-        
-    return df_meteo 
 
 # Pipeline pour la prédiction personnalisée : 
 
