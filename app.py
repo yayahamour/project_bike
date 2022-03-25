@@ -153,9 +153,9 @@ if st.button("Prédiction") :
         prediction = int(model.predict(array_1))   
     
     
-    st.success("L'estimation de location sur la plage horraire de "+ str(int(array_1['hour'].values)) + "h  est de " + str(prediction) + " vélos sur cette station.")
-    st.success("L'estimation à été effectué pour le " + str(int(array_1['day'])) + " à " + str(int(array_1['hour'])) + " h pour un/une " + str(int(array_1['holiday'])) + " avec une météo de type " + str(int(array_1['weather'])) + " avec une température de " + str(int(array_1['temp'])) + "° un taux d'humidité de " + str(int(array_1['humidity'])) + " % et un vent de " + str(int(array_1['windspeed'])) + "km/h.")            
-    
+        st.success("L'estimation de location sur la plage horraire de "+ str(int(array_1['hour'].values)) + "h  est de " + str(prediction) + " vélos sur cette station.")
+        st.success("L'estimation à été effectué pour le " + str(int(array_1['day'])) + " à " + str(int(array_1['hour'])) + " h pour un/une " + str(int(array_1['holiday'])) + " avec une météo de type " + str(int(array_1['weather'])) + " avec une température de " + str(int(array_1['temp'])) + "° un taux d'humidité de " + str(int(array_1['humidity'])) + " % et un vent de " + str(int(array_1['windspeed'])) + "km/h.")            
+        
     
         
             
