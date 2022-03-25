@@ -8,7 +8,6 @@ from PIL import Image
 from Pipeline.pipeline_df import run_df_dc , run_df_lille, run_df_dc_personalised
 from myclass import Interface
 
-
 def main():
     app = Interface()
     app.sidebar()
