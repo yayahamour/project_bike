@@ -14,7 +14,7 @@ from pipeline_function import *
 # Pipeline pour la prediction automatique pour Washington DC : 
 def run_df_dc():
         
-    df_app = make_df_init(paris=False)
+    df_app = make_df_init()
     stat_api_3h(df_app, lat='38.8951', lon='77.0364')    
     make_season_holiday_dc(df_app)
     return df_app
