@@ -5,7 +5,7 @@ import datetime as dt
 from contextlib import closing
 from urllib.request import urlopen
 import json
-from pipeline_function import *
+from Pipeline.pipeline_function import *
 
 # Data pour Lille à voir si utilisable  
 # https://opendata.lillemetropole.fr/explore/dataset/vlille-realtime/table/

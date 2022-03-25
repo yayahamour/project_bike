@@ -5,8 +5,12 @@ import sklearn
 import pandas as pd 
 import numpy as np 
 from PIL import Image
-from pipeline_df import run_df_dc , run_df_lille, run_df_dc_personalised
+from Pipeline.pipeline_df import run_df_dc , run_df_lille, run_df_dc_personalised
 
+weather_str = ['Ciel dégagé/légérement nuageux', 
+                        'Brume/Nuageux', 
+                        'Légère pluie/Légére chute de neige/Nuages eparpillé',
+                        'Forte Pluie/Chute de neige/Brouilard/Orage']
 
 df_app = ''
 
@@ -113,10 +117,11 @@ elif ville =='Lille':
 
 
         if st.button("Prédiction") :
-    
+            tab = str(date).split('-')
+            tab1 = str(time).split(':')
             prediction = int(model.predict(array_1))   
             st.success("L'estimation de location sur la plage horraire de "+ str(int(array_1['hour'].values)) + "h  est de " + str(prediction) + " vélos sur cette station.")
-            st.success("L'estimation à été effectué pour le " + str(int(array_1['day'])) + " à " + str(int(array_1['hour'])) + " h pour un/une " + str(int(array_1['holiday'])) + " avec une météo de type " + str(int(array_1['weather'])) + " avec une température de " + str(int(array_1['temp'])) + "° un taux d'humidité de " + str(int(array_1['humidity'])) + " % et un vent de " + str(int(array_1['windspeed'])) + "km/h.")
+            st.success("L'estimation à été effectué pour le " + tab[2]+'/'+tab[1]+'/'+tab[0] + " à " + tab1[0] + "h"+ tab[1]+ 'm' +", avec une météo de type " + str(weather) + " avec une température de " + str(int(array_1['temp'])) + "° un taux d'humidité de " + str(int(array_1['humidity'])) + " % et un vent de " + str(int(array_1['windspeed'])) + "km/h.")
             st.write(array_1)
 markdown =  '------------------------------------ \n Made by students of Simplon - Microsoft Dev IA formation'
 st.markdown(markdown)
