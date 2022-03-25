@@ -22,8 +22,7 @@ class Interface:
         st.image(image)
 
         st.write("Inauguré le 16 septembre 2011, V'Lille est le système de vélos en libre-service la métropole lilloise.\nDès son lancement, le service compte 2 000 abonnés dont 1 700 pour le libre-service. L'objectif affiché était d'arriver à 20 000 abonnés, libre-service et location longue durée confondus, d'ici 2015.\nAprès deux mois de fonctionnement, V'Lille compte 80 000 abonnés aux vélos en libre-service et 600 000 locations enregistrées.\nAu 1er janvier 2020, il compte 2200 vélos répartis sur 223 stations, ce qui en fait un des éléments phares du système vélo de la métropole lilloise, qui compte environ 1000 km² de pistes et voies cyclables.\nRejoignez-nous sur : https://www.ilevia.fr/cms/institutionnel/velo/vlille/ ")
-        markdown =  '------------------------------------ \n Made by students of Simplon - Microsoft Dev IA formation'
-        st.markdown(markdown)
+        
 
     def sidebar(self):
         self.date = st.sidebar.date_input("Entrer la date :")
