@@ -6,6 +6,9 @@ import pandas as pd
 import numpy as np 
 from PIL import Image
 from pipeline_df import run_df_dc , run_df_lille, run_df_dc_personalised
+import seaborn as sns 
+import altair as alt 
+import matplotlib.pyplot as plt 
 
 
 df_app = ''
@@ -67,11 +70,7 @@ if ville == 'Washington DC' :
         
         df_app = run_df_dc_personalised(date=date, time=time, weather=weather, temp=temp, temp_feel=temp, humidity=humidity, windspeed=windspeed)
         array_1 = df_app.iloc[0:1,:]
-    
-    if st.button("Prédiction") :
-    
-        prediction = int(model.predict(array_1))   
-        st.success("The estimate for the time range "+ str(int(array_1['hour'].values)) + "h  is " + str(prediction) + " bikes for this station.")
+
 
 
     
@@ -112,11 +111,53 @@ elif ville =='Lille':
             array_1 = df_app.iloc[0:1,:]
 
 
-        if st.button("Prédiction") :
+if st.button("Prédiction") :
+
+
+    if (genre == 'Automatique') :
     
-            prediction = int(model.predict(array_1))   
-            st.success("L'estimation de location sur la plage horraire de "+ str(int(array_1['hour'].values)) + "h  est de " + str(prediction) + " vélos sur cette station.")
-            st.success("L'estimation à été effectué pour le " + str(int(array_1['day'])) + " à " + str(int(array_1['hour'])) + " h pour un/une " + str(int(array_1['holiday'])) + " avec une météo de type " + str(int(array_1['weather'])) + " avec une température de " + str(int(array_1['temp'])) + "° un taux d'humidité de " + str(int(array_1['humidity'])) + " % et un vent de " + str(int(array_1['windspeed'])) + "km/h.")
-            st.write(array_1)
+    
+        pred = model.predict(df_app)
+        df_app['pred'] = pred    
+        prediction = int(model.predict(array_1))   
+        
+        st.success("L'estimation de location sur la plage horraire de "+ str(int(array_1['hour'].values)) + "h  est de " + str(prediction) + " vélos sur cette station.")
+        
+        
+        col1, col2 = st.columns(2)
+        fig, ax = plt.subplots()
+        ax.hist(df_app.loc[:,['pred']])
+        with col1 :
+            sns.barplot(data = df_app.iloc[0:9,:], x='hour', y='pred')
+            st.pyplot(fig) 
+        with col2:
+            sns.barplot(data = df_app, x='day', y='pred')
+            st.pyplot(fig) 
+        
+        st.success("L'estimation à été effectué pour le " + str(int(array_1['day'])) + " à " + str(int(array_1['hour'])) + " h pour un/une " + str(int(array_1['holiday'])) + " avec une météo de type " + str(int(array_1['weather'])) + " avec une température de " + str(int(array_1['temp'])) + "° un taux d'humidité de " + str(int(array_1['humidity'])) + " % et un vent de " + str(int(array_1['windspeed'])) + "km/h.")            
+
+            
+                
+            
+        st.area_chart(df_app)
+        st.bar_chart(df_app.loc[:,['pred']])
+        st.line_chart(df_app.loc[:,['pred']])
+        st.bar_chart(df_app)
+        
+    elif (genre == 'Manuel'):
+        
+            
+            
+        pred = model.predict(df_app)
+        df_app['pred'] = pred    
+        prediction = int(model.predict(array_1))   
+    
+    
+    st.success("L'estimation de location sur la plage horraire de "+ str(int(array_1['hour'].values)) + "h  est de " + str(prediction) + " vélos sur cette station.")
+    st.success("L'estimation à été effectué pour le " + str(int(array_1['day'])) + " à " + str(int(array_1['hour'])) + " h pour un/une " + str(int(array_1['holiday'])) + " avec une météo de type " + str(int(array_1['weather'])) + " avec une température de " + str(int(array_1['temp'])) + "° un taux d'humidité de " + str(int(array_1['humidity'])) + " % et un vent de " + str(int(array_1['windspeed'])) + "km/h.")            
+    
+    
+        
+            
 markdown =  '------------------------------------ \n Made by students of Simplon - Microsoft Dev IA formation'
 st.markdown(markdown)
