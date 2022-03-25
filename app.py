@@ -48,7 +48,7 @@ if ville == 'Washington DC' :
         
         # Creation of datafram 
         df_app = run_df_dc()
-        array_1 = df_app.iloc[-1:,:]
+        array_1 = df_app.iloc[0:1,:]
         
         
     elif genre == 'Manuel':
@@ -66,7 +66,7 @@ if ville == 'Washington DC' :
         windspeed = st.sidebar.text_input("Enter windspeed ? (in km/h):", value=0)
         
         df_app = run_df_dc_personalised(date=date, time=time, weather=weather, temp=temp, temp_feel=temp, humidity=humidity, windspeed=windspeed)
-        array_1 = df_app.iloc[-1:,:]
+        array_1 = df_app.iloc[0:1,:]
     
     if st.button("Prédiction") :
     
@@ -92,7 +92,7 @@ elif ville =='Lille':
             
             # Creation of datafram 
             df_app = run_df_lille()
-            array_1 = df_app.iloc[-1:,:]
+            array_1 = df_app.iloc[0:1,:]
         
         elif genre == 'Manuel':
         
@@ -109,7 +109,7 @@ elif ville =='Lille':
             windspeed = st.sidebar.text_input("Quel est la vitesse du vent ? (in km/h):", value=0)
             
             df_app = run_df_dc_personalised(date=date, time=time, weather=weather, temp=temp, temp_feel=temp, humidity=humidity, windspeed=windspeed)
-            array_1 = df_app.iloc[-1:,:]
+            array_1 = df_app.iloc[0:1,:]
 
 
         if st.button("Prédiction") :
