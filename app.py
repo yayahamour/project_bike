@@ -5,7 +5,7 @@ import sklearn
 import pandas as pd 
 import numpy as np 
 from PIL import Image
-from pipeline import run_df_dc , run_df_lille, run_df_dc_personalised
+from pipeline_df import run_df_dc , run_df_lille, run_df_dc_personalised
 
 
 df_app = ''
@@ -65,7 +65,7 @@ if ville == 'Washington DC' :
         humidity = st.sidebar.text_input("Quel est le pourcentage d'humidité ?", value=0)
         windspeed = st.sidebar.text_input("Quel est la vitesse du vent ? (in km/h):", value=0)
         
-        df_app = run_df_dc_personalised(date=date, time=time, day=day, weather=weather, temp=temp, temp_feel=temp, humidity=humidity, windspeed=windspeed)
+        df_app = run_df_dc_personalised(date=date, time=time, weather=weather, temp=temp, temp_feel=temp, humidity=humidity, windspeed=windspeed)
         array_1 = df_app.iloc[-1:,:]
 
 
@@ -103,7 +103,7 @@ elif ville =='Lille':
             humidity = st.sidebar.text_input("Quel est le pourcentage d'humidité ?", value=0)
             windspeed = st.sidebar.text_input("Quel est la vitesse du vent ? (in km/h):", value=0)
             
-            df_app = run_df_dc_personalised(date=date, time=time, day=day, weather=weather, temp=temp, temp_feel=temp, humidity=humidity, windspeed=windspeed)
+            df_app = run_df_dc_personalised(date=date, time=time, weather=weather, temp=temp, temp_feel=temp, humidity=humidity, windspeed=windspeed)
             array_1 = df_app.iloc[-1:,:]
 
 
