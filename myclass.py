@@ -7,6 +7,13 @@ import pandas as pd
 import numpy as np 
 from PIL import Image
 from Pipeline.pipeline_df import run_df_dc , run_df_lille, run_df_dc_personalised
+<<<<<<< HEAD
+=======
+import seaborn as sns 
+import altair as alt 
+import matplotlib.pyplot as plt 
+
+>>>>>>> d9c8157e4d39e9ae371ae7e5c4f84da706a19b13
 
 class Interface:
     
@@ -54,3 +61,23 @@ class Interface:
         color:#000000;
         }=
         </style>""", unsafe_allow_html=True)
+        
+    def graph(self):
+        df_app = run_df_lille()
+        array_1 = df_app.iloc[0:1,:]
+        pred = self.model.predict(df_app)
+        df_app['pred'] = pred    
+        prediction = int(self.model.predict(array_1))   
+        col1, col2 = st.columns(2)
+        fig, ax = plt.subplots()
+        ax.hist(df_app.loc[:,['pred']])
+        with col1 :
+            sns.barplot(data = df_app.iloc[0:9,:], x='hour', y='pred')
+            st.pyplot(fig) 
+        with col2:
+            sns.barplot(data = df_app, x='day', y='pred')
+            st.pyplot(fig) 
+        st.success("L'estimation à été effectué pour le " + str(int(array_1['day'])) + " à " + str(int(array_1['hour'])) + " h pour un/une " + str(int(array_1['holiday'])) + " avec une météo de type " + str(int(array_1['weather'])) + " avec une température de " + str(int(array_1['temp'])) + "° un taux d'humidité de " + str(int(array_1['humidity'])) + " % et un vent de " + str(int(array_1['windspeed'])) + "km/h.")             
+       
+        st.bar_chart(df_app.loc[:,['pred']])
+        st.bar_chart(df_app)
