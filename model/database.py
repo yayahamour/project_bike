@@ -17,8 +17,6 @@ def create_table(name):
         atemp FLOAT,
         humidity INTEGER,
         windspeed FLOAT,
-        casual INTEGER,
-        registered INTEGER,
         count INTEGER
         );""")
     DB.commit()
