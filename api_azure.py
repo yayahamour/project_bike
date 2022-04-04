@@ -10,18 +10,26 @@ def allowSelfSignedHttps(allowed):
 
 allowSelfSignedHttps(True) # this line is needed if you use self-signed certificate in your scoring service.
 
-# Request data goes here
+# Request data goes here 
 data = {
-  "season": 1,
-  "holiday": 1,
-  "workingday": 1,
-  "weather": 1,
-  "temp": 20,
-  "atemp": 15,
-  "humidity": 15,
-  "windspeed": 20,
-  "day": 88,
-  "hour": 16}
+  "Inputs": {
+    "data": [
+      {
+        "Column2": "example_value",
+        "datetime": "2000-01-01T00:00:00.000Z",
+        "season": 0,
+        "holiday": 0,
+        "workingday": 0,
+        "weather": 0,
+        "temp": 0.0,
+        "atemp": 0.0,
+        "humidity": 0,
+        "windspeed": 0.0
+      }
+    ]
+  },
+  "GlobalParameters": 0.0
+}
 
 body = str.encode(json.dumps(data))
 
