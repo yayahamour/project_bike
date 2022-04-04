@@ -25,6 +25,18 @@ data = {
         "atemp": 0.0,
         "humidity": 0,
         "windspeed": 0.0
+      },
+      {
+        "Column2": "onsenfou",
+        "datetime": "2000-01-01T00:00:00.000Z",
+        "season": 2,
+        "holiday": 1,
+        "workingday": 0,
+        "weather": 0,
+        "temp": 20,
+        "atemp": 21,
+        "humidity": 15,
+        "windspeed": 0.0
       }
     ]
   },
