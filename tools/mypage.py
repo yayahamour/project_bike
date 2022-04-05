@@ -47,6 +47,8 @@ class Page:
                 st.write(vlille_info_3)
                 st.write(vlille_contact_info)
                 # Apply the good predict datafram
+                st.write('--------------------------------------------------------')
+
                 
             if self.choices == '5 days => Predictions par 3h':     
                 self.df_app = run_df_lille()
@@ -68,6 +70,7 @@ class Page:
                 st.write(washington_info_2)
                 st.write(washington_info_3)
                 # Apply the good predict datafram
+                st.write('--------------------------------------------------------')
             
             if self.choices == '5 days => Predictions par 3h':
                 self.df_app = run_df_dc()
@@ -76,7 +79,6 @@ class Page:
             if self.genre =='Personnalisée':
                 self.df_app = run_df_dc_personalised( df=self.df_app, date=self.date, time=self.time, weather=self.weather, temp=self.temp, temp_feel=self.temp, humidity=self.humidity, windspeed=self.windspeed)
 
-        st.write('--------------------------------------------------------')
         
             
     def  sidebar(self):
@@ -153,14 +155,14 @@ class Page:
 
         
         # Affichage de la réponse de prédictions :
-        st.success("A environ "+ str(int(prediction_row['hour'])) + "h, heure de " +  self.ville  + ", l'IA entraînnnée par un modele " + self.model_selector + " s'attend à une demande de " + str(int(prediction_row['pred'])) + " vélos attendu sur une période étalée de 3h.")
+        st.success("A environ "+ str(int(prediction_row['hour'])) + "h, heure de " +  self.ville  + ", l'IA entraînnnée par un modele " + self.model_selector + " s'attend à une demande de **" + str(int(prediction_row['pred'])) + " vélos.**")
         
         if self.genre == "Personnalisée":
             st.write("Informations about prediction :")
-            st.success("\n\nL'estimation à été effectué pour le " + page_date[2]+'/'+page_date[1]+'/'+page_date[0] + ", soit, étant le " + str(int(prediction_row['day'])) + "ème jour de l'année, à " + page_time[0] + "h"+ page_time[1]+ 'm' +", pour une météo de type " + str(self.weather) + " avec une température de " + str(int(prediction_row['temp'])) + "°, un taux d'humidité de " + str(int(prediction_row['humidity'])) + "% et un vent de " + str(int(prediction_row['windspeed'])) + "km/h pour " + self.ville)
+            st.success("\n\n**L'estimation à été effectué pour le " + page_date[2]+'/'+page_date[1]+'/'+page_date[0] + " soit, étant le " + str(int(prediction_row['day'])) + "ème jour de l'année, à " + page_time[0] + "h"+ page_time[1]+ 'm' +", pour une météo de type " + str(self.weather) + " avec une température de " + str(int(prediction_row['temp'])) + "°, un taux d'humidité de " + str(int(prediction_row['humidity'])) + "% et un vent de " + str(int(prediction_row['windspeed'])) + "km/h pour " + self.ville + ".**")
         else:
             st.write("Informations about prediction :")
-            st.success("\n\nL'estimation à été effectué pour ce " + dt_date[8] + dt_date[9] + "/" + dt_date[5] + dt_date[6] +  "/"   + dt_date[0] + dt_date[1] + dt_date[2] + dt_date[3] + ", soit, étant le " + str(int(prediction_row['day'])) + "ème jour de l'année, à " +  str(int(prediction_row['hour'])) + "h"+ dt_hour[3] + dt_hour[4] +"m, considérant la météo et pour une température de " + str(int(prediction_row['temp'])) + "°, un taux d'humidité de " + str(int(prediction_row['humidity'])) + " % et un vent de " + str(int(prediction_row['windspeed'])) + "km/h pour " + self.ville)
+            st.success("\n\n**L'estimation à été effectué pour ce " + dt_date[8] + dt_date[9] + "/" + dt_date[5] + dt_date[6] +  "/"   + dt_date[0] + dt_date[1] + dt_date[2] + dt_date[3] + " soit, étant le " + str(int(prediction_row['day'])) + "ème jour de l'année, à " +  str(int(prediction_row['hour'])) + "h"+ dt_hour[3] + dt_hour[4] +"m, considérant la météo et pour une température de " + str(int(prediction_row['temp'])) + "°, un taux d'humidité de " + str(int(prediction_row['humidity'])) + " % et un vent de " + str(int(prediction_row['windspeed'])) + "km/h pour " + self.ville + ".**")
        
         st.write('--------------------------------------------------------')
        
@@ -185,14 +187,17 @@ class Page:
             
         if self.graph == 'Avancé':
             if self.choices == '5 days => Predictions par 3h':
-                df_app = self.df_app.copy()
+                df_pred = self.df_app.copy()
+                df_pred.index = df_pred['hour']
+
+
                 # st.area_chart(self.df_app)
                 st.write('--------------------------------------------------------')
                 st.write('Prediction des demandes en vélo pour les 15 prochaines heures')
-                st.bar_chart(df_app.loc[:15,['pred']])
+                st.bar_chart(df_pred.loc[:,['pred']])
                 st.write('--------------------------------------------------------')
                 st.write('Idem avec un apercit du poids des différents facteurs')
-                st.bar_chart(df_app.iloc[:15,:])
+                st.bar_chart(df_pred.loc[:,df_pred.columns != 'hour'])
                 
                 
             elif self.choices == '24h => Prediction par heure':
