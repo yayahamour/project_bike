@@ -1,4 +1,3 @@
-tools/__pycache__/mypage.cpython-310.pyc
-tools/__pycache__/pipeline_df.cpython-310.pyc
-tools/__pycache__/pipeline_function.cpython-310.pyc
 model/pycaret.ipynb
+/tools/__pycache__
+__pycache__
