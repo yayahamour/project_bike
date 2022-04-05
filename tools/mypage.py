@@ -83,7 +83,7 @@ class Page:
             
     def  sidebar(self):
         
-        self.model_selector = st.sidebar.selectbox("Selection du genre de client à prédir", ['XGBoost', 'LightGBM','VotingRegressor','Azure model'])       
+        self.model_selector = st.sidebar.selectbox("Selection du genre de client à prédir", ['XGBoost', 'LightGBM','StackingRegressor','Azure model'])       
         self.ville = st.sidebar.radio("Quelle ville souhaitez-vous prédir ?", ['Lille', 'Washington DC'])      
         self.prediction_config = st.sidebar.radio("Options :", ['Aucun','Predictions','Alertes'])     
 
@@ -127,8 +127,8 @@ class Page:
             savedmodel = open('./model/lgbm-2.pkl', 'rb')
             self.model = pickle.load(savedmodel)
             savedmodel.close()
-        elif self.model_selector == 'VotingRegressor':
-            savedmodel = open('./model/lgbm-2.pkl', 'rb')
+        elif self.model_selector == 'StackingRegressor':
+            savedmodel = open('./model/model_stack.sav', 'rb')
             self.model = pickle.load(savedmodel)
             savedmodel.close()
         elif self.model_selector == 'Azure model':
