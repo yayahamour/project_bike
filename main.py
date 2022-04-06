@@ -103,7 +103,7 @@ def prediction_lgbm( data : Topred ):
 
     season = data['season']
     holiday = data['holiday']
-    workingday = data['workingday']flask 
+    workingday = data['workingday'] 
     weather = data['weather']
     temp = data['temp']
     atemp = data['atemp']
