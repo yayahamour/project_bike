@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 
 
-
+# Definition of my dataclass Page 
 @dataclass
 class Page:
     
@@ -49,7 +49,7 @@ class Page:
                 # Apply the good predict datafram
                 st.write('--------------------------------------------------------')
 
-                
+            
             if self.choices == '5 days => Predictions par 3h':     
                 self.df_app = run_df_lille()
                 # Voir pour intégrer le df_app = pd.read_sql() ou pd.read_sql_query('select * from df_lille_1h', con) ? 
@@ -95,7 +95,6 @@ class Page:
             
             self.genre = st.sidebar.radio("Quelle type de prédiction souhaitez-vous ?", ['Instantannée', 'Personnalisée'])
             
-            
             if self.genre == 'Personnalisée' :
                 self.date = st.sidebar.date_input("Enter the date :")
                 self.time = st.sidebar.time_input("Enter hour :")
@@ -137,10 +136,9 @@ class Page:
             savedmodel.close()
             
         # Prediction en fonction de la premiere ligne du datafram
-        st.write(self.df_app)
         print(self.df_app.info())
         self.df_app = self.df_app.fillna(self.df_app.mean())
-        pred = self.model.predict(self.df_app.iloc[:,0:11])
+        pred = self.model.predict(self.df_app.iloc[:,0:12])
         self.df_app['pred'] = pred
         prediction_row = self.df_app.iloc[0:1,:]
         
@@ -168,7 +166,6 @@ class Page:
             st.success("\n\n**L'estimation à été effectué pour ce " + dt_date[8] + dt_date[9] + "/" + dt_date[5] + dt_date[6] +  "/"   + dt_date[0] + dt_date[1] + dt_date[2] + dt_date[3] + " soit, étant le " + str(int(prediction_row['day'])) + "ème jour de l'année, à " +  str(int(prediction_row['hour'])) + "h"+ dt_hour[3] + dt_hour[4] +"m, considérant la météo et pour une température de " + str(int(prediction_row['temp'])) + "°, un taux d'humidité de " + str(int(prediction_row['humidity'])) + " % et un vent de " + str(int(prediction_row['windspeed'])) + "km/h pour " + self.ville + ".**")
        
         st.write('--------------------------------------------------------')
-       
        
        
        
