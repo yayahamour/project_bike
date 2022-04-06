@@ -1,6 +1,5 @@
 from fastapi import FastAPI, File, HTTPException, UploadFile, Path 
 import uvicorn 
-from flask import Flask, render_template, jsonify
 import pickle 
 from models import Topred, Data
 import numpy as np 
@@ -104,7 +103,7 @@ def prediction_lgbm( data : Topred ):
 
     season = data['season']
     holiday = data['holiday']
-    workingday = data['workingday']
+    workingday = data['workingday']flask 
     weather = data['weather']
     temp = data['temp']
     atemp = data['atemp']
