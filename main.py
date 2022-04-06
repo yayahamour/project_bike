@@ -1,4 +1,4 @@
-from fastapi import Fastapp, File, HTTPException, UploadFile, Path 
+from fastapi import FastAPI, File, HTTPException, UploadFile, Path 
 import uvicorn 
 import pickle 
 from models import Topred, Data
@@ -60,8 +60,7 @@ def prediction_lgbm( dico : Data):
 
     for i in range(0,len(dico)):
         data = dico[str(i)]
-
-    
+        
         season.append(data['season'])
         holiday.append(data['holiday'])
         workingday.append(data['workingday'])
