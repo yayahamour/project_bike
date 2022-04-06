@@ -38,6 +38,7 @@ def stat_api_3h(df, lat, lon):
             
     df['day'] = [ i for i in date]
     df['hour']  = pd.to_datetime(df['day']).dt.hour
+    df['year']  = pd.to_datetime(df['day']).dt.year
     df['day']  = pd.to_datetime(df['day']).dt.dayofyear
     df['temp'] = [ i for i in temp]
     df['atemp'] = [ i for i in atemp]
@@ -174,6 +175,7 @@ def add_day_hour_from_nom(df):
     day = datetime.now()
     df['day'] = day                          
     df['hour']  = pd.to_datetime(df['day']).dt.hour
+    df['year']  = pd.to_datetime(df['day']).dt.year
     df['day']  = pd.to_datetime(df['day']).dt.dayofyear
     
     for i in range(0, len(df['hour'])):

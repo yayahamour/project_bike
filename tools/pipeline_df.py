@@ -24,6 +24,7 @@ def run_df_dc_personalised(df, date, time, weather, temp, temp_feel, humidity, w
     df.iloc[0:1,8]=  pd.to_datetime(str(date)).dayofyear   
     time = str(time) 
     df.iloc[0:1,9] = int(time[0:2])
+    df.iloc[0:1,10]=  pd.to_datetime(str(date)).year   
     
     make_season_holiday_dc(df)
 

@@ -124,11 +124,11 @@ class Page:
             self.model = pickle.load(savedmodel)
             savedmodel.close()
         elif self.model_selector == 'XGBoost':
-            savedmodel = open('./model/lgbm-2.pkl', 'rb')
+            savedmodel = open('./model/xgboost.pkl', 'rb')
             self.model = pickle.load(savedmodel)
             savedmodel.close()
         elif self.model_selector == 'StackingRegressor':
-            savedmodel = open('./model/model_stack.sav', 'rb')
+            savedmodel = open('./model/model_stack.pkl', 'rb')
             self.model = pickle.load(savedmodel)
             savedmodel.close()
         elif self.model_selector == 'Azure model':
@@ -137,7 +137,10 @@ class Page:
             savedmodel.close()
             
         # Prediction en fonction de la premiere ligne du datafram
-        pred = self.model.predict(self.df_app.iloc[:,0:10])
+        st.write(self.df_app)
+        print(self.df_app.info())
+        self.df_app = self.df_app.fillna(self.df_app.mean())
+        pred = self.model.predict(self.df_app.iloc[:,0:11])
         self.df_app['pred'] = pred
         prediction_row = self.df_app.iloc[0:1,:]
         
