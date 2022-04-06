@@ -1,4 +1,4 @@
-from fastapi import FastAPI, File, HTTPException, UploadFile, Path 
+from fastapi import Fastapp, File, HTTPException, UploadFile, Path 
 import uvicorn 
 import pickle 
 from models import Topred, Data
@@ -32,13 +32,13 @@ def load_model(model):
 #     return response
 
 
-api = FastAPI()
+app = FastAPI()
 
 from pydantic import BaseModel 
 
 
 # Predict the all datafram 
-@api.post("/predict/xgboost/all")
+@app.post("/predict/xgboost/all")
 def prediction_lgbm( dico : Data):
 
     model = load_model('xgboost')
@@ -91,7 +91,7 @@ def prediction_lgbm( dico : Data):
 
 
 # To predict one row of the datafram 
-@api.post("/predict/xgboost/row")
+@app.post("/predict/xgboost/row")
 def prediction_lgbm( data : Topred ):
     print('print data début de fonction: ', data)
 
@@ -125,8 +125,8 @@ def prediction_lgbm( data : Topred ):
 
 
 # One get for test
-@api.get("/")
-@api.get("/predict/")
+@app.get("/")
+@app.get("/predict/")
 def pred():
 
     # response = json.dumps({'a' : 'test'})
@@ -135,5 +135,5 @@ def pred():
 
 
 if __name__ == "__main__":
-    uvicorn.run(api, host="127.0.0.1", port=8000, log_level="info")
+    uvicorn.run(app, host="127.0.0.1", port=8000, log_level="info")
 
