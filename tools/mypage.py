@@ -85,7 +85,7 @@ class Page:
             
     def  sidebar(self):
         
-        self.model_selector = st.sidebar.selectbox("Selection du genre de client à prédir", ['xgboost', 'lgbm','StackingRegressor','Azure'])       
+        self.model_selector = st.sidebar.selectbox("Selection du genre de client à prédir", ['xgboost', 'lgbm','azure'])       
         self.ville = st.sidebar.radio("Quelle ville souhaitez-vous prédir ?", ['Lille', 'Washington DC'])      
         self.prediction_config = st.sidebar.radio("Options :", ['Aucun','Predictions','Alertes'])     
 
