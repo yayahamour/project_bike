@@ -38,12 +38,8 @@ def read_predict(model, dico):
 
 @app.post("/predict/{name}")
 def prediction_lgbm( name, dico : Data):
-    if (name != "azure"):
-        model = load_model(name)
-        return json.dumps(read_predict(model, dico))
-    else:
-        return api_azure(dico)
-
+    model = load_model(name)
+    return json.dumps(read_predict(model, dico))
 
 @app.get("/")
 def pred():
