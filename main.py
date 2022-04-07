@@ -4,8 +4,7 @@ import pickle
 from models import Data
 import numpy as np 
 import json 
-import pandas as pd 
-from api_azure import api_azure
+import pandas as pd
 
 
 def load_model(model):
