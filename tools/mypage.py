@@ -125,15 +125,11 @@ class Page:
         return({"data" : dic})
 
     def prediction(self):
-        print(self.df_app)
         r = requests.post(url='https://api-bike-braz.herokuapp.com/predict/'+self.model_selector, data=(json.dumps(self.convert(self.df_app))))    
         # Prediction en fonction de la premiere ligne du datafram
-        print(self.df_app.info())
         self.df_app = self.df_app.fillna(self.df_app.mean())
         self.df_app.to_csv("app.csv")
         pred = eval(r.json())
-        print(pred)
-        print(len(pred))
         self.df_app['pred'] = pred
         prediction_row = self.df_app.iloc[0:1,:]
         
