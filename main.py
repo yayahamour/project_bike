@@ -8,14 +8,9 @@ import pandas as pd
 
 
 def load_model(model): 
-    if model == 'xgboost':
-        savedmodel = open('./model/xgboost.pkl', 'rb')
-        model = pickle.load(savedmodel)
-        savedmodel.close()
-    elif model == "lgbm":
-        savedmodel = open('./model/lgbm.pkl', 'rb')
-        model = pickle.load(savedmodel)
-        savedmodel.close()
+    savedmodel = open('./model/'+ model +'.pkl', 'rb')
+    model = pickle.load(savedmodel)
+    savedmodel.close()
     return model
 
 app = FastAPI()
