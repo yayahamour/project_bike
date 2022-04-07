@@ -20,13 +20,13 @@ def read_predict(model, dico):
     pred = {}
     for key in dico['0'].keys():
         pred[key] = []
-    for line in range(0,len(dico)-1):
+    for line in range(0,len(dico)):
         data = dico[str(line)]
         for key in data.keys():
             temp = pred[key]
             temp.append(data[key])
             pred[key] = temp
-    df = pd.DataFrame(pred, index=np.arange(0,len(dico)-1))
+    df = pd.DataFrame(pred, index=np.arange(0,len(dico)))
 
     result = model.predict(df)
     response = []
