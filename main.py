@@ -5,9 +5,10 @@ from models import Data
 import numpy as np 
 import json 
 import pandas as pd 
+from api_azure import api_azure
 
 
-def load_model(model): 
+def load_model(model):
     savedmodel = open('./model/'+ model +'.pkl', 'rb')
     model = pickle.load(savedmodel)
     savedmodel.close()
@@ -37,9 +38,11 @@ def read_predict(model, dico):
 
 @app.post("/predict/{name}")
 def prediction_lgbm( name, dico : Data):
-
-    model = load_model(name)
-    return json.dumps(read_predict(model, dico))
+    if (name != "azure"):
+        model = load_model(name)
+        return json.dumps(read_predict(model, dico))
+    else:
+        return api_azure(dico)
 
 
 @app.get("/")

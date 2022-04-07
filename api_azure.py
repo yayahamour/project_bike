@@ -3,66 +3,31 @@ import json
 import os
 import ssl
 
-def allowSelfSignedHttps(allowed):
-    # bypass the server certificate verification on client side
-    if allowed and not os.environ.get('PYTHONHTTPSVERIFY', '') and getattr(ssl, '_create_unverified_context', None):
-        ssl._create_default_https_context = ssl._create_unverified_context
+def convert_azure(df):
+    tab = []
+    col = {"Column2" : ""}
+    for i, row in df.iterrows():
+        tab.append({col ,row.to_dict()})
+    return({"Inputs" : {"data" : tab}, "GlobalParameters" : 0.0})
+  
+def api_azure(data):
+    data = convert_azure(data)
+    body = str.encode(json.dumps(data))
 
-allowSelfSignedHttps(True) # this line is needed if you use self-signed certificate in your scoring service.
+    url = 'http://871c041d-2e05-4f25-9aa3-f5b57f00516f.westeurope.azurecontainer.io/score'
+    api_key = '' # Replace this with the API key for the web service
+    headers = {'Content-Type':'application/json', 'Authorization':('Bearer '+ api_key)}
 
-# Request data goes here 
-data = {
-  "Inputs": {
-    "data": [
-      {
-        "Column2": "onsenfou",
-        "season": 0,
-        "holiday": 0,
-        "workingday": 0,
-        "weather": 1,
-        "temp": -1.0,
-        "atemp": 0.0,
-        "humidity": 0,
-        "windspeed": 0.0,
-        "day": 0,
-        "hour": 0,
-        "year": 0
-      },
-      {
-        "Column2": "onsenfou",
-        "season": 0,
-        "holiday": 0,
-        "workingday": 0,
-        "weather": 2,
-        "temp": 0.0,
-        "atemp": 0.0,
-        "humidity": 15,
-        "windspeed": 0.0,
-        "day": 0,
-        "hour": 0,
-        "year": 0
-      }
-    ]
-  },
-  "GlobalParameters": 0.0
-}
+    req = urllib.request.Request(url, body, headers)
 
-body = str.encode(json.dumps(data))
+    try:
+        response = urllib.request.urlopen(req)
 
-url = 'http://871c041d-2e05-4f25-9aa3-f5b57f00516f.westeurope.azurecontainer.io/score'
-api_key = '' # Replace this with the API key for the web service
-headers = {'Content-Type':'application/json', 'Authorization':('Bearer '+ api_key)}
+        result = response.read()
+        return(result)
+    except urllib.error.HTTPError as error:
+        print("The request failed with status code: " + str(error.code))
 
-req = urllib.request.Request(url, body, headers)
-
-try:
-    response = urllib.request.urlopen(req)
-
-    result = response.read()
-    print(result)
-except urllib.error.HTTPError as error:
-    print("The request failed with status code: " + str(error.code))
-
-    # Print the headers - they include the requert ID and the timestamp, which are useful for debugging the failure
-    print(error.info())
-    print(error.read().decode("utf8", 'ignore'))
+        # Print the headers - they include the requert ID and the timestamp, which are useful for debugging the failure
+        print(error.info())
+        print(error.read().decode("utf8", 'ignore'))
