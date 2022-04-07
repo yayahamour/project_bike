@@ -7,7 +7,7 @@ def convert_azure(df):
     tab = []
     col = {"Column2" : ""}
     for i, row in df.iterrows():
-        tab.append({col ,row.to_dict()})
+        tab.append({**col ,**row.to_dict()})
     return({"Inputs" : {"data" : tab}, "GlobalParameters" : 0.0})
   
 def api_azure(data):
