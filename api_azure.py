@@ -15,28 +15,32 @@ data = {
   "Inputs": {
     "data": [
       {
-        "Column2": "example_value",
-        "datetime": "2000-01-01T00:00:00.000Z",
+        "Column2": "onsenfou",
         "season": 0,
         "holiday": 0,
         "workingday": 0,
-        "weather": 0,
-        "temp": 0.0,
+        "weather": 1,
+        "temp": -1.0,
         "atemp": 0.0,
         "humidity": 0,
-        "windspeed": 0.0
+        "windspeed": 0.0,
+        "day": 0,
+        "hour": 0,
+        "year": 0
       },
       {
         "Column2": "onsenfou",
-        "datetime": "2000-01-01T00:00:00.000Z",
-        "season": 2,
-        "holiday": 1,
+        "season": 0,
+        "holiday": 0,
         "workingday": 0,
-        "weather": 0,
-        "temp": 20,
-        "atemp": 21,
+        "weather": 2,
+        "temp": 0.0,
+        "atemp": 0.0,
         "humidity": 15,
-        "windspeed": 0.0
+        "windspeed": 0.0,
+        "day": 0,
+        "hour": 0,
+        "year": 0
       }
     ]
   },
@@ -45,8 +49,8 @@ data = {
 
 body = str.encode(json.dumps(data))
 
-url = 'https://modelvoting.westeurope.inference.ml.azure.com/score'
-api_key = 'v3cMOaSe9XWkTnvbuThbWaSuvwPkEWPZ' # Replace this with the API key for the web service
+url = 'http://871c041d-2e05-4f25-9aa3-f5b57f00516f.westeurope.azurecontainer.io/score'
+api_key = '' # Replace this with the API key for the web service
 headers = {'Content-Type':'application/json', 'Authorization':('Bearer '+ api_key)}
 
 req = urllib.request.Request(url, body, headers)
