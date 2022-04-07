@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 import json
 import requests
+from tools.api_azure import api_azure
 
 
 # Definition of my dataclass Page 
@@ -85,7 +86,7 @@ class Page:
             
     def  sidebar(self):
         
-        self.model_selector = st.sidebar.selectbox("Selection du genre de client à prédir", ['xgboost', 'lgbm','azure'])       
+        self.model_selector = st.sidebar.selectbox("Selection du genre de client à prédir", ['xgboost', 'lgbm',"stacking",'azure'])       
         self.ville = st.sidebar.radio("Quelle ville souhaitez-vous prédir ?", ['Lille', 'Washington DC'])      
         self.prediction_config = st.sidebar.radio("Options :", ['Aucun','Predictions','Alertes'])     
 
@@ -125,14 +126,17 @@ class Page:
         return({"data" : dic})
 
     def prediction(self):
-        r = requests.post(url='https://api-bike-braz.herokuapp.com/predict/'+self.model_selector, data=(json.dumps(self.convert(self.df_app))))    
-        # Prediction en fonction de la premiere ligne du datafram
+        if (self.model_selector != "azure"):
+            r = requests.post(url='https://api-bike-braz.herokuapp.com/predict/'+self.model_selector, data=(json.dumps(self.convert(self.df_app))))    
+            # Prediction en fonction de la premiere ligne du datafram
+            pred = eval(r.json())
+        else :
+            pred = eval(api_azure(self.df_app))["Results"]
+            print(type(pred))
+            
         self.df_app = self.df_app.fillna(self.df_app.mean())
-        self.df_app.to_csv("app.csv")
-        pred = eval(r.json())
         self.df_app['pred'] = pred
         prediction_row = self.df_app.iloc[0:1,:]
-        
         # display the dataffram for debugging  
         # st.write(self.df_app)            
         
