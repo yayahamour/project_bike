@@ -9,6 +9,8 @@ from PIL import Image
 import seaborn as sns 
 import matplotlib.pyplot as plt 
 from datetime import datetime
+import json
+import requests
 
 
 # Definition of my dataclass Page 
@@ -83,7 +85,7 @@ class Page:
             
     def  sidebar(self):
         
-        self.model_selector = st.sidebar.selectbox("Selection du genre de client à prédir", ['XGBoost', 'LightGBM','StackingRegressor','Azure model'])       
+        self.model_selector = st.sidebar.selectbox("Selection du genre de client à prédir", ['xgboost', 'lgbm','StackingRegressor','Azure'])       
         self.ville = st.sidebar.radio("Quelle ville souhaitez-vous prédir ?", ['Lille', 'Washington DC'])      
         self.prediction_config = st.sidebar.radio("Options :", ['Aucun','Predictions','Alertes'])     
 
@@ -115,30 +117,23 @@ class Page:
                 self.alert = st.sidebar.selectbox("Programmer une alerte ?", ['Par email', 'Par sms'])
                 st.sidebar.button('Programmer une alerte')
         
-        
+    
+    def convert(self, df):
+        dic = {}
+        for i, row in df.iterrows():
+            dic[str(i)] = row.to_dict()
+        return({"data" : dic})
+
     def prediction(self):
-        # On instancie le model 
-        if self.model_selector == 'LightGBM':
-            savedmodel = open('./model/lgbm.pkl', 'rb')
-            self.model = pickle.load(savedmodel)
-            savedmodel.close()
-        elif self.model_selector == 'XGBoost':
-            savedmodel = open('./model/xgboost.pkl', 'rb')
-            self.model = pickle.load(savedmodel)
-            savedmodel.close()
-        elif self.model_selector == 'StackingRegressor':
-            savedmodel = open('./model/model_stack.pkl', 'rb')
-            self.model = pickle.load(savedmodel)
-            savedmodel.close()
-        elif self.model_selector == 'Azure model':
-            savedmodel = open('./model/lgbm-2.pkl', 'rb')
-            self.model = pickle.load(savedmodel)
-            savedmodel.close()
-            
+        print(self.df_app)
+        r = requests.post(url='https://api-bike-braz.herokuapp.com/predict/'+self.model_selector, data=(json.dumps(self.convert(self.df_app))))    
         # Prediction en fonction de la premiere ligne du datafram
         print(self.df_app.info())
         self.df_app = self.df_app.fillna(self.df_app.mean())
-        pred = self.model.predict(self.df_app.iloc[:,0:12])
+        self.df_app.to_csv("app.csv")
+        pred = eval(r.json())
+        print(pred)
+        print(len(pred))
         self.df_app['pred'] = pred
         prediction_row = self.df_app.iloc[0:1,:]
         
