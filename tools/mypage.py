@@ -52,7 +52,7 @@ class Page:
                 st.write('--------------------------------------------------------')
 
             
-            if self.choices == '5 days => Predictions par 3h':     
+            if self.choices == 'Views 5 days':     
                 self.df_app = run_df_lille()
                 # Voir pour intégrer le df_app = pd.read_sql() ou pd.read_sql_query('select * from df_lille_1h', con) ? 
             else:
@@ -74,7 +74,7 @@ class Page:
                 # Apply the good predict datafram
                 st.write('--------------------------------------------------------')
             
-            if self.choices == '5 days => Predictions par 3h':
+            if self.choices == 'Views 5 days':
                 self.df_app = run_df_dc()
             else:
                 self.df_app = run_df_meteo_1h_dc()
@@ -91,9 +91,8 @@ class Page:
 
         
         if self.prediction_config == 'Predictions':
-            self.graph = st.sidebar.radio("Affichages des graphiques",['Simple', 'Avancé'])
 
-            self.choices = st.sidebar.selectbox("Select duration:" , ['5 days => Predictions par 3h', '24h => Prediction par heure'])
+            self.choices = st.sidebar.selectbox("Select duration:" , ['Views 5 days', 'Views 24 hours'])
             
             self.genre = st.sidebar.radio("Quelle type de prédiction souhaitez-vous ?", ['Instantannée', 'Personnalisée'])
             
@@ -176,8 +175,8 @@ class Page:
             sns.barplot(data = self.df_app, x='day', y='pred')
             st.pyplot(fig)  
             
-        if self.graph == 'Avancé':
-            if self.choices == '5 days => Predictions par 3h':
+        if self.prediction_config == 'Predictions':
+            if self.choices == 'Views 5 days':
                 df_pred = self.df_app.copy()
                 df_pred.index = df_pred['hour']
 
@@ -187,19 +186,15 @@ class Page:
                 st.write('Prediction des demandes en vélo pour les 15 prochaines heures')
                 st.bar_chart(df_pred.loc[:,['pred']])
                 st.write('--------------------------------------------------------')
-                st.write('Idem avec un apercit du poids des différents facteurs')
-                st.bar_chart(df_pred.loc[:,df_pred.columns != 'hour'])
                 
                 
-            elif self.choices == '24h => Prediction par heure':
+            elif self.choices == 'Views 24 hours':
                 df_app = self.df_app.copy()
                 # st.area_chart(self.df_app)
                 st.write('--------------------------------------------------------')
                 st.write('Prediction des demandes en vélo pour les 15 prochaines heures')
                 st.bar_chart(self.df_app.loc[:15,['pred']])
                 st.write('--------------------------------------------------------')
-                st.write('Idem avec un apercit du poids des différents facteurs')
-                st.bar_chart(df_app.iloc[:15,:])
                 
                 
     def init_page(self):
