@@ -150,14 +150,14 @@ class Page:
 
         
         # Affichage de la réponse de prédictions :
-        st.success("A environ "+ str(int(prediction_row['hour'])) + "h, heure de " +  self.ville  + ", l'IA entraînnnée par un modele " + self.model_selector + " s'attend à une demande de **" + str(int(prediction_row['pred'])) + " vélos.**")
+        st.success("A environ "+ str(int(prediction_row['hour'])) + "h, heure de " +  self.ville  + ", l'IA entraînnnée par un model " + self.model_selector + " s'attend à une demande de **" + str(int(prediction_row['pred'])) + " vélos.**")
         
         if self.genre == "Personnalisée":
             st.write("Informations about prediction :")
-            st.success("\n\n**L'estimation à été effectué pour le " + page_date[2]+'/'+page_date[1]+'/'+page_date[0] + " soit, étant le " + str(int(prediction_row['day'])) + "ème jour de l'année, à " + page_time[0] + "h"+ page_time[1]+ 'm' +", pour une météo de type " + str(self.weather) + " avec une température de " + str(int(prediction_row['temp'])) + "°, un taux d'humidité de " + str(int(prediction_row['humidity'])) + "% et un vent de " + str(int(prediction_row['windspeed'])) + "km/h pour " + self.ville + ".**")
+            st.success("\n\n**L'estimation à été effectuée pour le " + page_date[2]+'/'+page_date[1]+'/'+page_date[0] + " soit, étant le " + str(int(prediction_row['day'])) + "ème jour de l'année, à " + page_time[0] + "h"+ page_time[1]+ 'm' +", pour une météo de type " + str(self.weather) + " avec une température de " + str(int(prediction_row['temp'])) + "°, un taux d'humidité de " + str(int(prediction_row['humidity'])) + "% et un vent de " + str(int(prediction_row['windspeed'])) + "km/h pour " + self.ville + ".**")
         else:
             st.write("Informations about prediction :")
-            st.success("\n\n**L'estimation à été effectué pour ce " + dt_date[8] + dt_date[9] + "/" + dt_date[5] + dt_date[6] +  "/"   + dt_date[0] + dt_date[1] + dt_date[2] + dt_date[3] + " soit, étant le " + str(int(prediction_row['day'])) + "ème jour de l'année, à " +  str(int(prediction_row['hour'])) + "h"+ dt_hour[3] + dt_hour[4] +"m, considérant la météo et pour une température de " + str(int(prediction_row['temp'])) + "°, un taux d'humidité de " + str(int(prediction_row['humidity'])) + " % et un vent de " + str(int(prediction_row['windspeed'])) + "km/h pour " + self.ville + ".**")
+            st.success("\n\n**L'estimation à été effectuée pour ce " + dt_date[8] + dt_date[9] + "/" + dt_date[5] + dt_date[6] +  "/"   + dt_date[0] + dt_date[1] + dt_date[2] + dt_date[3] + " soit, étant le " + str(int(prediction_row['day'])) + "ème jour de l'année, à " +  str(int(prediction_row['hour'])) + "h"+ dt_hour[3] + dt_hour[4] +"m, considérant la météo et pour une température de " + str(int(prediction_row['temp'])) + "°, un taux d'humidité de " + str(int(prediction_row['humidity'])) + " % et un vent de " + str(int(prediction_row['windspeed'])) + "km/h pour " + self.ville + ".**")
        
         st.write('--------------------------------------------------------')
        
