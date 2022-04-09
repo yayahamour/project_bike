@@ -86,7 +86,7 @@ class Page:
             
     def  sidebar(self):
         
-        self.model_selector = st.sidebar.selectbox("Selection du model de prediction", ['xgboost', 'lgbm',"stacking",'azure'])       
+        self.model_selector = st.sidebar.selectbox("Selection du modèle de prediction", ['xgboost', 'lgbm',"stacking",'azure'])       
         self.ville = st.sidebar.radio("Quelle ville souhaitez-vous prédir ?", ['Lille', 'Washington DC'])      
         self.prediction_config = st.sidebar.radio("Options :", ['Aucun','Predictions','Alertes'])     
 
@@ -150,7 +150,7 @@ class Page:
 
         
         # Affichage de la réponse de prédictions :
-        st.success("A environ "+ str(int(prediction_row['hour'])) + "h, heure de " +  self.ville  + ", l'IA entraînnnée par un model " + self.model_selector + " s'attend à une demande de **" + str(int(prediction_row['pred'])) + " vélos.**")
+        st.success("A environ "+ str(int(prediction_row['hour'])) + "h, heure de " +  self.ville  + ", l'IA entraînnnée par un modéle " + self.model_selector + " s'attend à une demande de **" + str(int(prediction_row['pred'])) + " vélos.**")
         
         if self.genre == "Personnalisée":
             st.write("Informations about prediction :")
