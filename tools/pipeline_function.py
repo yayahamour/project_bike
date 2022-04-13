@@ -113,10 +113,10 @@ def make_season_holiday_dc(df):
     df.rename(columns = {'weather' : 'weather2'}, inplace = True)
     df.insert(4, 'weather', 0)
     
-    df['weather'][df['weather2'].str.lower().isin([weather_choice_1_from_api, weather_choice_1_from_page.lower()])] = 1
-    df['weather'][df['weather2'].str.lower().isin([weather_choice_2_from_api, weather_choice_2_from_page.lower()])] = 2
-    df['weather'][df['weather2'].str.lower().isin([weather_choice_3_from_api, weather_choice_3_from_page.lower()])] = 3
-    df['weather'][df['weather2'].str.lower().isin([weather_choice_4_from_api, weather_choice_4_from_page.lower()])] = 4
+    df['weather'][df['weather2'].str.lower().isin([weather_choice_1_from_api, weather_choice_1_from_page.lower()])] = 4
+    df['weather'][df['weather2'].str.lower().isin([weather_choice_2_from_api, weather_choice_2_from_page.lower()])] = 3
+    df['weather'][df['weather2'].str.lower().isin([weather_choice_3_from_api, weather_choice_3_from_page.lower()])] = 2
+    df['weather'][df['weather2'].str.lower().isin([weather_choice_4_from_api, weather_choice_4_from_page.lower()])] = 1
     df.drop('weather2', axis=1, inplace=True)
     
     df['weather'] = df['weather'].astype(int)
@@ -160,10 +160,10 @@ def make_season_holiday_fr(df):
     df.rename(columns = {'weather' : 'weather2'}, inplace = True)
     df.insert(4, 'weather', 0)
         
-    df['weather'][df['weather2'].str.lower().isin([weather_choice_1_from_api, weather_choice_1_from_page.lower()])] = 1
-    df['weather'][df['weather2'].str.lower().isin([weather_choice_2_from_api, weather_choice_2_from_page.lower()])] = 2
-    df['weather'][df['weather2'].str.lower().isin([weather_choice_3_from_api, weather_choice_3_from_page.lower()])] = 3
-    df['weather'][df['weather2'].str.lower().isin([weather_choice_4_from_api, weather_choice_4_from_page.lower()])] = 4
+    df['weather'][df['weather2'].str.lower().isin([weather_choice_1_from_api, weather_choice_1_from_page.lower()])] = 4
+    df['weather'][df['weather2'].str.lower().isin([weather_choice_2_from_api, weather_choice_2_from_page.lower()])] = 3
+    df['weather'][df['weather2'].str.lower().isin([weather_choice_3_from_api, weather_choice_3_from_page.lower()])] = 2
+    df['weather'][df['weather2'].str.lower().isin([weather_choice_4_from_api, weather_choice_4_from_page.lower()])] = 1
     df.drop('weather2', axis=1, inplace=True)
     
     df['weather'] = df['weather'].astype(int)
