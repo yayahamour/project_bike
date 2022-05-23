@@ -36,7 +36,7 @@ def read_predict(model, dico):
 
 
 @app.post("/predict/{name}")
-def prediction_lgbm( name, dico : Data):
+async def prediction_lgbm( name, dico : Data):
     model = load_model(name)
     return json.dumps(read_predict(model, dico))
 
