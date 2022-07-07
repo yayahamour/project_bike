@@ -86,7 +86,7 @@ class Page:
             
     def  sidebar(self):
         
-        self.model_selector = st.sidebar.selectbox("Selection du modèle de prediction", ['xgboost', 'lgbm',"stacking",'azure'])       
+        self.model_selector = st.sidebar.selectbox("Selection du modèle de prediction", ['xgboost', 'lgbm',"stacking"])       
         self.ville = st.sidebar.radio("Quelle ville souhaitez-vous prédir ?", ['Lille', 'Washington DC'])      
         self.prediction_config = st.sidebar.radio("Options :", ['Aucun','Predictions','Alertes'])     
 
@@ -125,7 +125,7 @@ class Page:
         return({"data" : dic})
 
     def prediction(self):
-        if (self.model_selector != "azure"):
+        if (self.model_selector != "azure"): # Modele Azure deleted for now
             r = requests.post(url='https://api-bike-braz.herokuapp.com/predict/'+self.model_selector, data=(json.dumps(self.convert(self.df_app))))    
             # Prediction en fonction de la premiere ligne du datafram
             pred = eval(r.json())
